@@ -30,6 +30,10 @@ interface PresenceData {
    * tooltip for the smallImageKey
    */
   smallImageText?: string;
+  /**
+   * Array of buttons, max 2, label is the button text, and url is the link
+   */
+  buttons?: { label: string; url: string }[];
 }
 /**
  * Options that change the behavior of the presence
@@ -147,7 +151,7 @@ interface Metadata {
    * A string used to represent the category the presence falls under.
    * @link https://docs.premid.app/dev/presence/metadata#presence-categories
    */
-  category: string;
+  category: "anime" | "games" | "music" | "socials" | "videos" | "other";
   /**
    * Defines whether `iFrames` are used.
    */
@@ -249,7 +253,10 @@ declare class Presence {
    * @param language Language
    * @link https://docs.premid.app/dev/presence/class#getstringsobject
    */
-  getStrings(strings: Object, language?: string): Promise<any>;
+  getStrings<T extends { [K: string]: string }>(
+    strings: T,
+    language?: string
+  ): Promise<T>;
   /**
    * Get letiables from the actual site
    * @param {Array} letiables Array of letiable names to get
